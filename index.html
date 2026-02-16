@@ -1,10 +1,13 @@
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Growing Design - Portfolio</title>
+    <title>Growing Design — Onde visão se torna presença</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Satoshi:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <link href="https://api.fontshare.com/v2/css?f[]=clash-display@400,500,600,700&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -12,170 +15,1318 @@
             box-sizing: border-box;
         }
 
+        :root {
+            --orange: #F95706;
+            --orange-light: #FF7A33;
+            --blue: #034FFC;
+            --blue-dark: #0A1A4D;
+            --dark: #0A0A0A;
+            --light: #FAFAFA;
+            --gray: #6B6B6B;
+            --gray-light: #E8E8E8;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            font-family: 'Satoshi', -apple-system, sans-serif;
+            background: var(--light);
+            color: var(--dark);
+            overflow-x: hidden;
             line-height: 1.6;
-            color: #333;
         }
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
+        /* CUSTOM CURSOR */
+        .cursor {
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--orange);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            transition: transform 0.15s ease, opacity 0.15s ease;
+            mix-blend-mode: difference;
         }
 
-        /* Header */
+        .cursor.hover {
+            transform: scale(2.5);
+            background: var(--orange);
+            opacity: 0.5;
+        }
+
+        /* HEADER */
         header {
-            background: white;
-            padding: 20px 0;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            position: sticky;
+            position: fixed;
             top: 0;
-            z-index: 100;
-        }
-
-        header .container {
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 1.5rem 4rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
-        .logo img {
-            height: 40px;
+        .logo {
+            font-family: 'Satoshi', sans-serif;
+            font-weight: 900;
+            font-size: 1.1rem;
+            color: white;
+            text-decoration: none;
+            letter-spacing: -0.02em;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .logo-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--orange);
+            border-radius: 50%;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.3); }
+        }
+
+        nav {
+            display: flex;
+            gap: 3rem;
         }
 
         nav a {
-            margin-left: 30px;
+            color: white;
             text-decoration: none;
-            color: #333;
+            font-size: 0.85rem;
             font-weight: 500;
-            transition: color 0.3s;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            position: relative;
         }
 
-        nav a:hover {
-            color: #007bff;
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: white;
+            transition: width 0.3s ease;
         }
 
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        .header-cta {
+            color: white;
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 500;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .header-cta .arrow {
+            transition: transform 0.3s ease;
+        }
+
+        .header-cta:hover .arrow {
+            transform: translateX(4px);
+        }
+
+        /* HEADER COLOR STATES */
+        header.header-light .logo,
+        header.header-light nav a,
+        header.header-light .header-cta {
+            color: white;
+        }
+
+        header.header-light nav a::after {
+            background: white;
+        }
+
+        header.header-dark {
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(10px);
+        }
+
+        header.header-dark .logo,
+        header.header-dark nav a,
+        header.header-dark .header-cta {
+            color: var(--dark);
+        }
+
+        header.header-dark nav a::after {
+            background: var(--orange);
+        }
+
+        header.header-dark .logo-dot {
+            background: var(--orange);
+        }
+
+        /* HERO */
+        .hero {
+            min-height: 100vh;
+            background: var(--blue);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 4rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, var(--blue) 0%, var(--blue-dark) 100%);
+            z-index: 0;
+        }
+
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .hero-circle {
+            position: absolute;
+            border-radius: 50%;
+            background: white;
+            opacity: 0.05;
+            animation: float 20s ease-in-out infinite;
+        }
+
+        .hero-circle:nth-child(1) {
+            width: 600px;
+            height: 600px;
+            top: -200px;
+            right: -100px;
+            animation-delay: 0s;
+        }
+
+        .hero-circle:nth-child(2) {
+            width: 400px;
+            height: 400px;
+            bottom: -100px;
+            left: 10%;
+            animation-delay: -5s;
+        }
+
+        .hero-circle:nth-child(3) {
+            width: 300px;
+            height: 300px;
+            top: 30%;
+            left: 50%;
+            animation-delay: -10s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            25% { transform: translate(30px, -30px) scale(1.05); }
+            50% { transform: translate(-20px, 20px) scale(0.95); }
+            75% { transform: translate(20px, 10px) scale(1.02); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 1400px;
+        }
+
+        .hero-tagline {
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.7);
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            margin-bottom: 2rem;
+            font-weight: 500;
+        }
+
+        .hero h1 {
+            font-family: 'Clash Display', sans-serif;
+            font-size: clamp(2.75rem, 7vw, 5.5rem);
+            font-weight: 600;
+            color: white;
+            line-height: 1;
+            letter-spacing: -0.03em;
+            margin-bottom: 3rem;
+        }
+
+        .hero h1 em {
+            font-style: normal;
+            color: var(--orange);
+        }
+
+        .hero-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.15);
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 4rem;
+        }
+
+        .stat {
+            color: white;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: white;
+            letter-spacing: -0.02em;
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            color: rgba(255,255,255,0.7);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-top: 0.25rem;
+        }
+
+        .scroll-indicator {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.75rem;
+            color: rgba(255,255,255,0.4);
+        }
+
+        .scroll-indicator span {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            writing-mode: vertical-rl;
+        }
+
+        .scroll-line {
+            width: 1px;
+            height: 60px;
+            background: linear-gradient(to bottom, var(--orange), transparent);
+            animation: scrollPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes scrollPulse {
+            0%, 100% { transform: scaleY(1); opacity: 1; }
+            50% { transform: scaleY(0.5); opacity: 0.5; }
+        }
+
+        /* SECTION GENERAL */
+        section {
+            padding: 8rem 4rem;
+        }
+
+        .section-header {
+            margin-bottom: 5rem;
+        }
+
+        .section-label {
+            font-size: 0.8rem;
+            color: var(--orange);
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            margin-bottom: 1.5rem;
+            font-weight: 500;
+        }
+
+        .section-title {
+            font-family: 'Clash Display', sans-serif;
+            font-size: clamp(1.75rem, 3vw, 2.5rem);
+            font-weight: 600;
+            line-height: 1.2;
+            letter-spacing: -0.02em;
+            max-width: 600px;
+        }
+
+        .section-title em {
+            font-style: normal;
+            color: var(--orange);
+        }
+
+        /* ABOUT */
+        .about {
+            background: var(--light);
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 6rem;
+            align-items: center;
+        }
+
+        .about-text {
+            font-size: 1.3rem;
+            line-height: 1.7;
+            color: var(--gray);
+        }
+
+        .about-text strong {
+            color: var(--dark);
+            font-weight: 700;
+        }
+
+        .about-visual {
+            position: relative;
+            height: 500px;
+        }
+
+        .about-circles {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        .about-circle {
+            position: absolute;
+            border-radius: 50%;
+            background: var(--orange);
+        }
+
+        .about-circle:nth-child(1) {
+            width: 200px;
+            height: 200px;
+            top: 0;
+            left: 0;
+            animation: circleFloat1 6s ease-in-out infinite;
+        }
+
+        .about-circle:nth-child(2) {
+            width: 150px;
+            height: 150px;
+            top: 30%;
+            right: 10%;
+            opacity: 0.7;
+            animation: circleFloat2 8s ease-in-out infinite;
+        }
+
+        .about-circle:nth-child(3) {
+            width: 100px;
+            height: 100px;
+            bottom: 10%;
+            left: 20%;
+            opacity: 0.5;
+            animation: circleFloat3 7s ease-in-out infinite;
+        }
+
+        .about-circle:nth-child(4) {
+            width: 60px;
+            height: 60px;
+            bottom: 30%;
+            right: 30%;
+            opacity: 0.3;
+            animation: circleFloat1 5s ease-in-out infinite reverse;
+        }
+
+        @keyframes circleFloat1 {
+            0%, 100% { transform: translate(0, 0); }
+            50% { transform: translate(20px, -30px); }
+        }
+
+        @keyframes circleFloat2 {
+            0%, 100% { transform: translate(0, 0); }
+            50% { transform: translate(-30px, 20px); }
+        }
+
+        @keyframes circleFloat3 {
+            0%, 100% { transform: translate(0, 0); }
+            50% { transform: translate(15px, 15px); }
+        }
+
+        /* METHODOLOGY */
+        .methodology {
+            background: var(--dark);
+            color: white;
+        }
+
+        .methodology .section-title {
+            color: white;
+        }
+
+        .method-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 1px;
+            background: rgba(255,255,255,0.1);
+            margin-top: 4rem;
+        }
+
+        .method-item {
+            background: var(--dark);
+            padding: 2.5rem 1.5rem;
+            position: relative;
+            transition: all 0.4s ease;
+            cursor: pointer;
+        }
+
+        .method-item::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--orange);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.4s ease;
+        }
+
+        .method-item:hover::before {
+            transform: scaleX(1);
+        }
+
+        .method-item:hover {
+            background: rgba(249, 87, 6, 0.1);
+        }
+
+        .method-number {
+            font-size: 2rem;
+            font-weight: 900;
+            color: var(--orange);
+            opacity: 0.3;
+            margin-bottom: 1.5rem;
+            transition: opacity 0.3s ease;
+        }
+
+        .method-item:hover .method-number {
+            opacity: 1;
+        }
+
+        .method-title {
+            font-family: 'Clash Display', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            letter-spacing: -0.01em;
+        }
+
+        .method-desc {
+            font-size: 0.85rem;
+            color: rgba(255,255,255,0.5);
+            line-height: 1.6;
+            transition: color 0.3s ease;
+        }
+
+        .method-item:hover .method-desc {
+            color: rgba(255,255,255,0.8);
+        }
+
+        /* RESULTS */
+        .results {
+            background: var(--light);
+        }
+
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+            margin-top: 4rem;
+        }
+
+        .result-card {
+            background: white;
+            padding: 3rem;
+            border-radius: 2px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            border: 1px solid var(--gray-light);
+        }
+
+        .result-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--orange);
+            transform: translateY(100%);
+            transition: transform 0.4s ease;
+            z-index: 0;
+        }
+
+        .result-card:hover::after {
+            transform: translateY(0);
+        }
+
+        .result-card:hover {
+            border-color: var(--orange);
+        }
+
+        .result-card:hover .result-number,
+        .result-card:hover .result-label {
+            color: white;
+        }
+
+        .result-number {
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: var(--orange);
+            letter-spacing: -0.03em;
+            position: relative;
+            z-index: 1;
+            transition: color 0.4s ease;
+        }
+
+        .result-label {
+            font-size: 0.85rem;
+            color: var(--gray);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-top: 0.5rem;
+            position: relative;
+            z-index: 1;
+            transition: color 0.4s ease;
+        }
+
+        /* TESTIMONIALS */
+        .testimonials {
+            background: white;
+            border-top: 1px solid var(--gray-light);
+        }
+
+        .testimonials-carousel {
+            margin-top: 4rem;
+        }
+
+        .testimonial {
+            max-width: 900px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .testimonial-quote {
+            font-family: 'Clash Display', sans-serif;
+            font-size: clamp(1.2rem, 2vw, 1.6rem);
+            font-weight: 500;
+            line-height: 1.5;
+            color: var(--dark);
+            margin-bottom: 3rem;
+        }
+
+        .testimonial-quote::before {
+            content: '"';
+            color: var(--orange);
+            font-size: 4rem;
+            line-height: 0;
+            vertical-align: middle;
+            margin-right: 0.25rem;
+        }
+
+        .testimonial-author {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .author-name {
+            font-weight: 700;
+            font-size: 1rem;
+            letter-spacing: 0.05em;
+        }
+
+        .author-role {
+            font-size: 0.85rem;
+            color: var(--gray);
+        }
+
+        .testimonial-nav {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-top: 3rem;
+        }
+
+        .testimonial-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--gray-light);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .testimonial-dot.active {
+            background: var(--orange);
+            transform: scale(1.3);
+        }
+
+        /* CTA SECTION */
+        .cta {
+            background: var(--blue);
+            padding: 10rem 4rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, var(--blue) 0%, var(--blue-dark) 100%);
+            z-index: 0;
+        }
+
+        .cta-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            opacity: 0.08;
+            z-index: 1;
+        }
+
+        .cta-circle {
+            position: absolute;
+            border-radius: 50%;
+            border: 1px solid white;
+        }
+
+        .cta-circle:nth-child(1) {
+            width: 500px;
+            height: 500px;
+            top: -200px;
+            left: -200px;
+        }
+
+        .cta-circle:nth-child(2) {
+            width: 400px;
+            height: 400px;
+            bottom: -150px;
+            right: -100px;
+        }
+
+        .cta-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .cta h2 {
+            font-family: 'Clash Display', sans-serif;
+            font-size: clamp(2rem, 4vw, 3rem);
+            color: white;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            letter-spacing: -0.02em;
+        }
+
+        .cta p {
+            font-size: 1.2rem;
+            color: rgba(255,255,255,0.9);
+            margin-bottom: 3rem;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 1rem;
+            background: var(--orange);
+            color: white;
+            padding: 1.25rem 3rem;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.9rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+        }
+
+        .cta-button:hover {
+            background: white;
+            color: var(--blue);
+            transform: translateY(-3px);
+        }
+
+        .cta-button .arrow {
+            transition: transform 0.3s ease;
+        }
+
+        .cta-button:hover .arrow {
+            transform: translateX(5px);
+        }
+
+        /* FOOTER */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 5rem 4rem 2rem;
+        }
+
+        .footer-top {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 4rem;
+            padding-bottom: 4rem;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .footer-brand p {
+            font-size: 1.1rem;
+            color: rgba(255,255,255,0.6);
+            line-height: 1.7;
+            margin-top: 1.5rem;
+            max-width: 350px;
+        }
+
+        .footer-column h4 {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--orange);
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column li {
+            margin-bottom: 0.75rem;
+        }
+
+        .footer-column a {
+            color: rgba(255,255,255,0.6);
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: color 0.3s ease;
+        }
+
+        .footer-column a:hover {
+            color: white;
+        }
+
+        .footer-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 2rem;
+        }
+
+        .footer-bottom p {
+            font-size: 0.85rem;
+            color: rgba(255,255,255,0.4);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .social-links a {
+            color: rgba(255,255,255,0.4);
+            text-decoration: none;
+            font-size: 0.85rem;
+            transition: color 0.3s ease;
+        }
+
+        .social-links a:hover {
+            color: var(--blue);
+        }
+
+        /* ANIMATIONS */
+        .reveal {
+            opacity: 0;
+            transform: translateY(60px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 1200px) {
+            .method-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+            
+            .method-item:nth-child(5),
+            .method-item:nth-child(6),
+            .method-item:nth-child(7) {
+                grid-column: span 1;
+            }
+        }
+
+        @media (max-width: 1024px) {
+            header {
+                padding: 1.5rem 2rem;
+            }
+
+            section {
+                padding: 5rem 2rem;
+            }
+
+            .hero {
+                padding: 2rem;
+            }
+
+            .about-grid {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+
+            .about-visual {
+                height: 300px;
+            }
+
+            .method-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .results-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .footer-top {
+                grid-template-columns: 1fr 1fr;
+                gap: 3rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .cursor {
+                display: none;
+            }
+
+            nav {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero-stats {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+
+            .hero-bottom {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 2rem;
+            }
+
+            .scroll-indicator {
+                display: none;
+            }
+
+            .method-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .results-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-top {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+
+            .cta {
+                padding: 5rem 2rem;
+            }
+        }
+
+        /* MOBILE MENU */
         .mobile-menu-btn {
             display: none;
             flex-direction: column;
-            background: none;
-            border: none;
+            gap: 5px;
             cursor: pointer;
-            padding: 5px;
+            z-index: 1001;
         }
 
         .mobile-menu-btn span {
             width: 25px;
-            height: 3px;
-            background: #333;
-            margin: 3px 0;
-            transition: 0.3s;
-        }
-
-        .mobile-nav {
-            display: none;
-            position: fixed;
-            top: 80px;
-            left: 0;
-            right: 0;
+            height: 2px;
             background: white;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            padding: 20px;
-            z-index: 99;
+            transition: all 0.3s ease;
         }
 
-        .mobile-nav.active {
-            display: block;
+        header.header-dark .mobile-menu-btn span {
+            background: var(--dark);
         }
 
-        .mobile-nav a {
-            display: block;
-            padding: 15px 0;
-            text-decoration: none;
-            color: #333;
-            border-bottom: 1px solid #eee;
+        .mobile-menu-btn.active span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
         }
 
-        /* Hero */
-        .hero {
-            text-align: center;
-            padding: 100px 20px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        .mobile-menu-btn.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .mobile-menu-btn.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(5px, -5px);
+        }
+
+        @media (max-width: 768px) {
+            .mobile-menu-btn {
+                display: flex;
+            }
+
+            .header-cta {
+                display: none;
+            }
+
+            nav {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100vh;
+                background: var(--blue);
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                gap: 2rem;
+                transform: translateX(-100%);
+                transition: transform 0.4s ease;
+                z-index: 1000;
+            }
+
+            nav.active {
+                transform: translateX(0);
+            }
+
+            nav a {
+                font-size: 1.5rem;
+                color: white !important;
+            }
+
+            nav a::after {
+                background: white !important;
+            }
+        }
+
+        /* LEADER SECTION */
+        .leader {
+            background: var(--dark);
             color: white;
+            padding: 8rem 4rem;
         }
 
-        .hero h1 {
-            font-size: 3rem;
-            margin-bottom: 20px;
+        .leader-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 6rem;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
         }
 
-        .hero p {
+        .leader-image {
+            position: relative;
+        }
+
+        .leader-image img {
+            width: 100%;
+            height: auto;
+            border-radius: 4px;
+            filter: grayscale(20%);
+            transition: filter 0.4s ease;
+        }
+
+        .leader-image:hover img {
+            filter: grayscale(0%);
+        }
+
+        .leader-image::after {
+            content: '';
+            position: absolute;
+            bottom: -20px;
+            right: -20px;
+            width: 100px;
+            height: 100px;
+            background: var(--orange);
+            border-radius: 50%;
+            z-index: -1;
+        }
+
+        .leader-content {
+            padding: 2rem 0;
+        }
+
+        .leader-name {
+            font-family: 'Clash Display', sans-serif;
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .leader-role {
+            color: var(--orange);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 2rem;
+        }
+
+        .leader-quote {
+            font-family: 'Clash Display', sans-serif;
             font-size: 1.3rem;
-            opacity: 0.9;
+            font-weight: 500;
+            line-height: 1.4;
+            margin-bottom: 2rem;
+            color: rgba(255,255,255,0.9);
         }
 
-        /* Portfolio */
+        .leader-bio {
+            font-size: 1rem;
+            line-height: 1.8;
+            color: rgba(255,255,255,0.7);
+            margin-bottom: 2rem;
+        }
+
+        .leader-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+        }
+
+        .leader-tag {
+            background: rgba(255,255,255,0.1);
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            color: rgba(255,255,255,0.8);
+        }
+
+        /* PORTFOLIO SECTION */
         .portfolio {
-            padding: 80px 20px;
-        }
-
-        .portfolio h2 {
-            text-align: center;
-            font-size: 2.5rem;
-            margin-bottom: 60px;
+            background: var(--light);
+            padding: 8rem 4rem;
         }
 
         .portfolio-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+            margin-top: 4rem;
         }
 
         .portfolio-item {
+            position: relative;
+            aspect-ratio: 4/3;
+            overflow: hidden;
+            border-radius: 4px;
+            background: var(--gray-light);
             cursor: pointer;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            transition: transform 0.3s, box-shadow 0.3s;
         }
 
-        .portfolio-item:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-        }
-
-        .portfolio-image {
-            height: 250px;
-            overflow: hidden;
-        }
-
-        .portfolio-image img {
+        .portfolio-item img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: transform 0.3s;
+            transition: transform 0.6s ease;
         }
 
-        .portfolio-item:hover .portfolio-image img {
-            transform: scale(1.1);
+        .portfolio-item:hover img {
+            transform: scale(1.05);
         }
 
-        .portfolio-info {
-            padding: 20px;
+        .portfolio-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 2rem;
+            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+            transform: translateY(100%);
+            transition: transform 0.4s ease;
+        }
+
+        .portfolio-item:hover .portfolio-overlay {
+            transform: translateY(0);
+        }
+
+        .portfolio-title {
+            font-family: 'Clash Display', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: white;
+            margin-bottom: 0.25rem;
+        }
+
+        .portfolio-category {
+            font-size: 0.85rem;
+            color: var(--orange);
+        }
+
+        .portfolio-placeholder {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--gray-light) 0%, #d0d0d0 100%);
+            color: var(--gray);
+        }
+
+        .portfolio-placeholder-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
+
+        .portfolio-placeholder-text {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        /* OTHER SERVICES SECTION */
+        .services {
             background: white;
+            padding: 8rem 4rem;
+            border-top: 1px solid var(--gray-light);
         }
 
-        .portfolio-info h3 {
-            margin-bottom: 10px;
-            color: #333;
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-top: 4rem;
         }
 
-        .portfolio-info p {
-            color: #666;
+        .service-card {
+            background: var(--light);
+            padding: 3rem 2rem;
+            border-radius: 4px;
+            text-align: center;
+            transition: all 0.4s ease;
+            border: 1px solid transparent;
         }
 
-        /* Lightbox */
+        .service-card:hover {
+            background: white;
+            border-color: var(--orange);
+            transform: translateY(-5px);
+        }
+
+        .service-icon {
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 1.5rem;
+            background: var(--orange);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .service-icon svg {
+            width: 28px;
+            height: 28px;
+            fill: white;
+        }
+
+        .service-title {
+            font-family: 'Clash Display', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            color: var(--dark);
+        }
+
+        .service-desc {
+            font-size: 0.9rem;
+            color: var(--gray);
+            line-height: 1.6;
+        }
+
+        /* RESPONSIVE - NEW SECTIONS */
+        @media (max-width: 1024px) {
+            .leader-grid {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+
+            .leader-image {
+                max-width: 400px;
+                margin: 0 auto;
+            }
+
+            .portfolio-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .leader {
+                padding: 5rem 2rem;
+            }
+
+            .leader-name {
+                font-size: 1.5rem;
+            }
+
+            .leader-quote {
+                font-size: 1.1rem;
+            }
+
+            .portfolio {
+                padding: 5rem 2rem;
+            }
+
+            .services {
+                padding: 5rem 2rem;
+            }
+        }
+
+        /* LIGHTBOX */
         .lightbox {
             display: none;
             position: fixed;
@@ -183,8 +1334,8 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0,0,0,0.95);
-            z-index: 1000;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 10000;
             align-items: center;
             justify-content: center;
         }
@@ -194,388 +1345,827 @@
         }
 
         .lightbox-content {
-            max-width: 90%;
-            max-height: 90%;
             position: relative;
+            max-width: 90vw;
+            max-height: 85vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .lightbox-content img {
             max-width: 100%;
-            max-height: 90vh;
+            max-height: 85vh;
             object-fit: contain;
-        }
-
-        .lightbox-close, .lightbox-prev, .lightbox-next {
-            position: fixed;
-            background: rgba(255,255,255,0.1);
-            border: none;
-            color: white;
-            font-size: 30px;
-            cursor: pointer;
-            padding: 15px 20px;
-            transition: background 0.3s;
-        }
-
-        .lightbox-close:hover, .lightbox-prev:hover, .lightbox-next:hover {
-            background: rgba(255,255,255,0.2);
+            border-radius: 4px;
         }
 
         .lightbox-close {
+            position: absolute;
             top: 20px;
             right: 20px;
+            width: 50px;
+            height: 50px;
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            z-index: 10001;
+        }
+
+        .lightbox-close:hover {
+            background: var(--orange);
+        }
+
+        .lightbox-close::before,
+        .lightbox-close::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 2px;
+            background: white;
+        }
+
+        .lightbox-close::before {
+            transform: rotate(45deg);
+        }
+
+        .lightbox-close::after {
+            transform: rotate(-45deg);
+        }
+
+        .lightbox-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 50px;
+            height: 50px;
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            color: white;
+            font-size: 1.5rem;
+        }
+
+        .lightbox-nav:hover {
+            background: var(--orange);
         }
 
         .lightbox-prev {
             left: 20px;
-            top: 50%;
-            transform: translateY(-50%);
         }
 
         .lightbox-next {
             right: 20px;
-            top: 50%;
-            transform: translateY(-50%);
         }
 
         .lightbox-counter {
-            position: fixed;
-            bottom: 30px;
+            position: absolute;
+            bottom: 20px;
             left: 50%;
             transform: translateX(-50%);
             color: white;
-            font-size: 18px;
-            background: rgba(0,0,0,0.5);
-            padding: 10px 20px;
-            border-radius: 20px;
+            font-size: 0.9rem;
+            opacity: 0.7;
         }
 
-        /* Footer */
-        footer {
-            background: #333;
+        .lightbox-title {
+            position: absolute;
+            top: 20px;
+            left: 20px;
             color: white;
-            text-align: center;
-            padding: 40px 20px;
         }
 
-        footer a {
-            color: white;
-            text-decoration: none;
-            margin: 0 15px;
+        .lightbox-title h3 {
+            font-family: 'Clash Display', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
         }
 
-        /* Mobile */
+        .lightbox-title span {
+            font-size: 0.85rem;
+            color: var(--orange);
+        }
+
         @media (max-width: 768px) {
-            .desktop-nav {
-                display: none;
+            .lightbox-nav {
+                width: 40px;
+                height: 40px;
+                font-size: 1.2rem;
             }
 
-            .mobile-menu-btn {
-                display: flex;
+            .lightbox-prev {
+                left: 10px;
             }
 
-            .hero h1 {
-                font-size: 2rem;
+            .lightbox-next {
+                right: 10px;
             }
 
-            .hero p {
-                font-size: 1rem;
+            .lightbox-title {
+                top: 70px;
+                left: 15px;
             }
 
-            .portfolio-grid {
-                grid-template-columns: 1fr;
+            .lightbox-title h3 {
+                font-size: 1.2rem;
             }
+        }
+
+        /* GRAIN OVERLAY */
+        .grain {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9998;
+            opacity: 0.03;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
         }
     </style>
 </head>
 <body>
-    <!-- Header -->
+    <!-- GRAIN OVERLAY -->
+    <div class="grain"></div>
+
+    <!-- CUSTOM CURSOR -->
+    <div class="cursor"></div>
+
+    <!-- HEADER -->
     <header>
-        <div class="container">
-            <div class="logo">
-                <h2>Growing Design</h2>
-            </div>
-            <nav class="desktop-nav">
-                <a href="#portfolio">Portfolio</a>
-                <a href="#sobre">Sobre</a>
-                <a href="#contato">Contato</a>
-            </nav>
-            <button class="mobile-menu-btn" aria-label="Menu">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
+        <a href="#" class="logo">
+            <span class="logo-dot"></span>
+            Growing Design
+        </a>
+        <nav>
+            <a href="#sobre">Sobre</a>
+            <a href="#metodologia">Metodologia</a>
+            <a href="#portfolio">Portfolio</a>
+            <a href="#contato">Contato</a>
+        </nav>
+        <a href="#contato" class="header-cta">
+            Iniciar Projeto <span class="arrow">→</span>
+        </a>
+        <div class="mobile-menu-btn">
+            <span></span>
+            <span></span>
+            <span></span>
         </div>
     </header>
 
-    <!-- Mobile Menu -->
-    <nav class="mobile-nav">
-        <a href="#portfolio">Portfolio</a>
-        <a href="#sobre">Sobre</a>
-        <a href="#contato">Contato</a>
-    </nav>
-
-    <!-- Hero Section -->
+    <!-- HERO -->
     <section class="hero">
-        <div class="container">
-            <h1>Transformamos marcas em experiências memoráveis</h1>
-            <p>Estratégia, identidade visual e design que conectam</p>
+        <div class="hero-bg">
+            <div class="hero-circle"></div>
+            <div class="hero-circle"></div>
+            <div class="hero-circle"></div>
         </div>
-    </section>
-
-    <!-- Portfolio Section -->
-    <section id="portfolio" class="portfolio">
-        <div class="container">
-            <h2>Projetos</h2>
-            <div class="portfolio-grid">
-                
-                <!-- Oriol Advocacia -->
-                <div class="portfolio-item" data-project="oriol">
-                    <div class="portfolio-image">
-                        <img src="oriol-capa.png" alt="Oriol Advocacia">
-                    </div>
-                    <div class="portfolio-info">
-                        <h3>Oriol Advocacia</h3>
-                        <p>Identidade Visual para escritório de advocacia</p>
-                    </div>
+        <div class="hero-content">
+            <p class="hero-tagline">Branding & Identidade Visual</p>
+            <h1>Transformamos<br>visão em <em>presença</em></h1>
+        </div>
+        <div class="hero-bottom">
+            <div class="hero-stats">
+                <div class="stat">
+                    <div class="stat-number">200+</div>
+                    <div class="stat-label">Projetos</div>
                 </div>
-
-                <!-- Instituto Cristiane Menezes -->
-                <div class="portfolio-item" data-project="cristiane">
-                    <div class="portfolio-image">
-                        <img src="cristiane-capa.png" alt="Instituto Cristiane Menezes">
-                    </div>
-                    <div class="portfolio-info">
-                        <h3>Instituto Cristiane Menezes</h3>
-                        <p>Branding para clínica de harmonização facial</p>
-                    </div>
+                <div class="stat">
+                    <div class="stat-number">15</div>
+                    <div class="stat-label">Anos de Experiência</div>
                 </div>
-
-                <!-- Sâmela Nails -->
-                <div class="portfolio-item" data-project="samela">
-                    <div class="portfolio-image">
-                        <img src="samela-capa.png" alt="Sâmela Nails">
-                    </div>
-                    <div class="portfolio-info">
-                        <h3>Sâmela Nails</h3>
-                        <p>Branding para estúdio de nail art premium</p>
-                    </div>
+                <div class="stat">
+                    <div class="stat-number">95%</div>
+                    <div class="stat-label">Satisfação</div>
                 </div>
-
-                <!-- SafeTech Training Institute -->
-                <div class="portfolio-item" data-project="safetech">
-                    <div class="portfolio-image">
-                        <img src="safetech-01.png" alt="SafeTech Training Institute">
-                    </div>
-                    <div class="portfolio-info">
-                        <h3>SafeTech Training Institute</h3>
-                        <p>Identidade Visual para instituto de formação técnica</p>
-                    </div>
-                </div>
-
+            </div>
+            <div class="scroll-indicator">
+                <span>Scroll</span>
+                <div class="scroll-line"></div>
             </div>
         </div>
     </section>
 
-    <!-- Lightbox Modal -->
-    <div class="lightbox" id="lightbox">
-        <button class="lightbox-close">&times;</button>
-        <button class="lightbox-prev">&#10094;</button>
-        <button class="lightbox-next">&#10095;</button>
-        <div class="lightbox-content">
-            <img src="" alt="">
-            <div class="lightbox-counter"></div>
+    <!-- ABOUT -->
+    <section id="sobre" class="about">
+        <div class="section-header reveal">
+            <p class="section-label">Sobre Nós</p>
+            <h2 class="section-title">A única metodologia que combina <em>estratégia científica</em> com criatividade autêntica</h2>
         </div>
+        <div class="about-grid">
+            <div class="about-text reveal">
+                <p>Somos uma <strong>agência de branding</strong> especializada em transformar empresas estabelecidas em <strong>sistemas de marca completos</strong>.</p>
+                <br>
+                <p>Com mais de 15 anos de experiência, desenvolvemos uma metodologia própria — o <strong>Growing 7 System</strong> — que garante marcas que geram conexão emocional e resultados mensuráveis.</p>
+                <br>
+                <p>Não criamos apenas logos. Criamos <strong>presença</strong>.</p>
+            </div>
+            <div class="about-visual reveal">
+                <div class="about-circles">
+                    <div class="about-circle"></div>
+                    <div class="about-circle"></div>
+                    <div class="about-circle"></div>
+                    <div class="about-circle"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- LEADER -->
+    <section class="leader">
+        <div class="leader-grid">
+            <div class="leader-image reveal">
+                <img src="eduardo-soares.png" alt="Eduardo Soares - Diretor Criativo">
+            </div>
+            <div class="leader-content reveal">
+                <h2 class="leader-name">Eduardo Soares</h2>
+                <p class="leader-role">Fundador & Diretor Criativo</p>
+                <p class="leader-quote">"Antes de desenhar, eu preciso entender. Cada marca tem uma história esperando para ser contada — meu trabalho é encontrar essa história e dar a ela uma forma inesquecível."</p>
+                <p class="leader-bio">
+                    Carioca de nascimento, mineiro por amor. Há 25 anos casado e há 15 anos transformando empresas em marcas que geram conexão real. Especialista em inteligência artificial generativa aplicada a imagens e vídeos, une tecnologia de ponta com o olhar humano que só a experiência traz.
+                    <br><br>
+                    Formado por mestres como Marcelo Kimura (ID Classes), Pedro Paneto (Golden Ratio) e especialização em IA pelo Nexus. Já criou marcas para empresas no Brasil, Estados Unidos, Portugal e Argentina.
+                    <br><br>
+                    Curioso por natureza — seu hobby é investigar a origem das coisas: como surgiram, quando, por quê. Essa obsessão por entender o "porquê" é o que torna cada projeto único.
+                </p>
+                <div class="leader-tags">
+                    <span class="leader-tag">Branding Estratégico</span>
+                    <span class="leader-tag">Identidade Visual</span>
+                    <span class="leader-tag">IA Generativa</span>
+                    <span class="leader-tag">Motion Design</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- METHODOLOGY -->
+    <section id="metodologia" class="methodology">
+        <div class="section-header reveal">
+            <p class="section-label">Nossa Metodologia</p>
+            <h2 class="section-title">Growing 7 System — Os 7 círculos que transformam empresas em marcas <em>inesquecíveis</em></h2>
+        </div>
+        <div class="method-grid">
+            <div class="method-item reveal">
+                <div class="method-number">01</div>
+                <h3 class="method-title">Visão</h3>
+                <p class="method-desc">Definimos claramente onde sua empresa quer chegar e como se posicionar de forma única no mercado.</p>
+            </div>
+            <div class="method-item reveal">
+                <div class="method-number">02</div>
+                <h3 class="method-title">Propósito</h3>
+                <p class="method-desc">Descobrimos o propósito autêntico que move sua empresa e conecta emocionalmente com seu público.</p>
+            </div>
+            <div class="method-item reveal">
+                <div class="method-number">03</div>
+                <h3 class="method-title">Estratégia</h3>
+                <p class="method-desc">Desenvolvemos a estratégia integrada que guia todas as decisões visuais e de comunicação.</p>
+            </div>
+            <div class="method-item reveal">
+                <div class="method-number">04</div>
+                <h3 class="method-title">Criatividade</h3>
+                <p class="method-desc">Traduzimos toda a estratégia em conceitos visuais únicos e diferenciadores no mercado.</p>
+            </div>
+            <div class="method-item reveal">
+                <div class="method-number">05</div>
+                <h3 class="method-title">Execução</h3>
+                <p class="method-desc">Desenvolvemos tecnicamente sua identidade visual com precisão e excelência em cada detalhe.</p>
+            </div>
+            <div class="method-item reveal">
+                <div class="method-number">06</div>
+                <h3 class="method-title">Inovação</h3>
+                <p class="method-desc">Adicionamos elementos diferenciadores únicos que tornam sua marca verdadeiramente inesquecível.</p>
+            </div>
+            <div class="method-item reveal">
+                <div class="method-number">07</div>
+                <h3 class="method-title">Resultado</h3>
+                <p class="method-desc">Garantimos implementação efetiva e medimos o impacto real da nova marca no seu negócio.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- RESULTS -->
+    <section id="resultados" class="results">
+        <div class="section-header reveal">
+            <p class="section-label">Resultados</p>
+            <h2 class="section-title">Métricas reais de clientes que <em>transformaram</em> seus negócios</h2>
+        </div>
+        <div class="results-grid">
+            <div class="result-card reveal">
+                <div class="result-number">+180%</div>
+                <div class="result-label">Reconhecimento</div>
+            </div>
+            <div class="result-card reveal">
+                <div class="result-number">+67%</div>
+                <div class="result-label">Conversões</div>
+            </div>
+            <div class="result-card reveal">
+                <div class="result-number">+87%</div>
+                <div class="result-label">Ticket Médio</div>
+            </div>
+            <div class="result-card reveal">
+                <div class="result-number">95%</div>
+                <div class="result-label">Satisfação</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PORTFOLIO -->
+    <section id="portfolio" class="portfolio">
+        <div class="section-header reveal">
+            <p class="section-label">Portfolio</p>
+            <h2 class="section-title">Identidades visuais que <em>transformam</em> negócios</h2>
+        </div>
+        <div class="portfolio-grid">
+            <div class="portfolio-item reveal" onclick="openLightbox('oriol')">
+                <img src="oriol-capa.png" alt="Oriol Advocacia - Identidade Visual">
+                <div class="portfolio-overlay">
+                    <h3 class="portfolio-title">Oriol Advocacia</h3>
+                    <span class="portfolio-category">Identidade Visual</span>
+                </div>
+            </div>
+            <div class="portfolio-item reveal" onclick="openLightbox('cristiane')">
+                <img src="cristiane-capa.png" alt="Instituto Cristiane Menezes - Identidade Visual">
+                <div class="portfolio-overlay">
+                    <h3 class="portfolio-title">Instituto Cristiane Menezes</h3>
+                    <span class="portfolio-category">Identidade Visual</span>
+                </div>
+            </div>
+            <div class="portfolio-item reveal" onclick="openLightbox('samela')">
+                <img src="samela-capa.png" alt="Sâmela Nails - Identidade Visual">
+                <div class="portfolio-overlay">
+                    <h3 class="portfolio-title">Sâmela Nails</h3>
+                    <span class="portfolio-category">Identidade Visual</span>
+                </div>
+            </div>
+            <div class="portfolio-item reveal">
+                <div class="portfolio-placeholder">
+                    <span class="portfolio-placeholder-icon">◓</span>
+                    <span class="portfolio-placeholder-text">Projeto 04</span>
+                </div>
+                <div class="portfolio-overlay">
+                    <h3 class="portfolio-title">Nome do Projeto</h3>
+                    <span class="portfolio-category">Identidade Visual</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- OTHER SERVICES -->
+    <section class="services">
+        <div class="section-header reveal">
+            <p class="section-label">Outros Serviços</p>
+            <h2 class="section-title">Além do branding, criamos <em>experiências</em> visuais completas</h2>
+        </div>
+        <div class="services-grid">
+            <div class="service-card reveal">
+                <div class="service-icon">
+                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                    </svg>
+                </div>
+                <h3 class="service-title">Motion Design</h3>
+                <p class="service-desc">Animações 3D e motion graphics que dão vida à sua marca e capturam a atenção do seu público.</p>
+            </div>
+            <div class="service-card reveal">
+                <div class="service-icon">
+                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M17 10.5V7c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4z"/>
+                    </svg>
+                </div>
+                <h3 class="service-title">Vídeos Realistas</h3>
+                <p class="service-desc">Produções audiovisuais com CGI e renderização fotorealista para apresentar seus produtos de forma impactante.</p>
+            </div>
+            <div class="service-card reveal">
+                <div class="service-icon">
+                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14zm-7-2h2v-4h4v-2h-4V7h-2v4H8v2h4z"/>
+                    </svg>
+                </div>
+                <h3 class="service-title">Packaging Design</h3>
+                <p class="service-desc">Design de embalagens que destacam seu produto no ponto de venda e criam conexão imediata com o consumidor.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- TESTIMONIALS -->
+    <section class="testimonials">
+        <div class="section-header reveal">
+            <p class="section-label">Depoimentos</p>
+            <h2 class="section-title">O que nossos <em>clientes</em> dizem</h2>
+        </div>
+        <div class="testimonials-carousel reveal">
+            <div class="testimonial">
+                <p class="testimonial-quote">Em 6 meses, nossa receita dobrou. A nova marca não só chamou atenção, como gerou uma conexão real com nossos clientes. O Growing 7 System realmente funciona.</p>
+                <div class="testimonial-author">
+                    <span class="author-name">Marcos Ferreira</span>
+                    <span class="author-role">CEO, TechSolutions</span>
+                </div>
+            </div>
+            <div class="testimonial-nav">
+                <div class="testimonial-dot active"></div>
+                <div class="testimonial-dot"></div>
+                <div class="testimonial-dot"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section id="contato" class="cta">
+        <div class="cta-bg">
+            <div class="cta-circle"></div>
+            <div class="cta-circle"></div>
+        </div>
+        <div class="cta-content reveal">
+            <h2>Pronto para transformar<br>sua marca?</h2>
+            <p>Vamos descobrir juntos como o Growing 7 System pode revolucionar sua presença no mercado.</p>
+            <a href="/cdn-cgi/l/email-protection#98fbf7f6ecf9ecf7d8ffeaf7eff1f6fffcfdebf1fff6b6fbf7f5b6faea" class="cta-button">
+                Solicitar Proposta <span class="arrow">→</span>
+            </a>
+        </div>
+    </section>
+
+    <!-- LIGHTBOX -->
+    <div id="lightbox" class="lightbox">
+        <button class="lightbox-close" onclick="closeLightbox()"></button>
+        <div class="lightbox-title">
+            <h3 id="lightbox-title-text">Projeto</h3>
+            <span id="lightbox-category-text">Categoria</span>
+        </div>
+        <button class="lightbox-nav lightbox-prev" onclick="prevImage()">←</button>
+        <div class="lightbox-content">
+            <img id="lightbox-image" src="" alt="Imagem do projeto">
+        </div>
+        <button class="lightbox-nav lightbox-next" onclick="nextImage()">→</button>
+        <div class="lightbox-counter" id="lightbox-counter">1 / 15</div>
     </div>
 
-    <!-- Footer -->
-    <footer id="contato">
-        <div class="container">
-            <p>&copy; 2024 Growing Design. Todos os direitos reservados.</p>
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-top">
+            <div class="footer-brand">
+                <a href="#" class="logo">
+                    <span class="logo-dot"></span>
+                    Growing Design
+                </a>
+                <p>Transformamos visão em presença através da metodologia Growing 7 System. Design que pensa.</p>
+            </div>
+            <div class="footer-column">
+                <h4>Serviços</h4>
+                <ul>
+                    <li><a href="#">Identidade Visual</a></li>
+                    <li><a href="#">Branding Estratégico</a></li>
+                    <li><a href="#">Growing 7 System</a></li>
+                    <li><a href="#">Consultoria</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>Empresa</h4>
+                <ul>
+                    <li><a href="#">Sobre Nós</a></li>
+                    <li><a href="#">Metodologia</a></li>
+                    <li><a href="#">Portfolio</a></li>
+                    <li><a href="#">Blog</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>Contato</h4>
+                <ul>
+                    <li><a href="/cdn-cgi/l/email-protection#44272b2a3025302b0423362b332d2a232021372d232a6a272b296a2636"><span class="__cf_email__" data-cfemail="eb8884859f8a9f84ab8c99849c82858c8f8e98828c85c5888486c58999">[email&#160;protected]</span></a></li>
+                    <li><a href="tel:+5531999999999">(31) 9 9999-9999</a></li>
+                    <li><a href="#">Belo Horizonte, MG</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2024 Growing Design. Todos os direitos reservados.</p>
             <div class="social-links">
-                <a href="mailto:[email protected]">Contato</a>
+                <a href="#">Instagram</a>
+                <a href="#">LinkedIn</a>
+                <a href="#">Behance</a>
             </div>
         </div>
     </footer>
 
-    <script>
-        // Mobile Menu Toggle
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+        // CUSTOM CURSOR
+        const cursor = document.querySelector('.cursor');
+        let mouseX = 0, mouseY = 0;
+        let cursorX = 0, cursorY = 0;
+
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+        });
+
+        function animateCursor() {
+            cursorX += (mouseX - cursorX) * 0.1;
+            cursorY += (mouseY - cursorY) * 0.1;
+            cursor.style.left = cursorX - 10 + 'px';
+            cursor.style.top = cursorY - 10 + 'px';
+            requestAnimationFrame(animateCursor);
+        }
+        animateCursor();
+
+        // CURSOR HOVER EFFECT
+        const hoverElements = document.querySelectorAll('a, button, .method-item, .result-card');
+        hoverElements.forEach(el => {
+            el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
+            el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
+        });
+
+        // REVEAL ANIMATIONS
+        const reveals = document.querySelectorAll('.reveal');
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, { threshold: 0.1, rootMargin: '-50px' });
+
+        reveals.forEach(el => revealObserver.observe(el));
+
+        // HEADER SCROLL COLOR CHANGE
+        const header = document.querySelector('header');
+        const hero = document.querySelector('.hero');
+        const cta = document.querySelector('.cta');
+        
+        function updateHeaderColor() {
+            const heroBottom = hero.getBoundingClientRect().bottom;
+            const ctaTop = cta.getBoundingClientRect().top;
+            const ctaBottom = cta.getBoundingClientRect().bottom;
+            
+            if (heroBottom > 80 || (ctaTop < 80 && ctaBottom > 0)) {
+                // Sobre fundo azul (hero ou CTA)
+                header.classList.remove('header-dark');
+                header.classList.add('header-light');
+            } else {
+                // Sobre fundo claro
+                header.classList.remove('header-light');
+                header.classList.add('header-dark');
+            }
+        }
+        
+        window.addEventListener('scroll', updateHeaderColor);
+        updateHeaderColor();
+
+        // SMOOTH SCROLL
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    // Fechar menu mobile se estiver aberto
+                    document.querySelector('nav').classList.remove('active');
+                    document.querySelector('.mobile-menu-btn').classList.remove('active');
+                    document.body.style.overflow = '';
+                }
+            });
+        });
+
+        // MOBILE MENU TOGGLE
         const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
-        const mobileNav = document.querySelector('.mobile-nav');
+        const nav = document.querySelector('nav');
 
         mobileMenuBtn.addEventListener('click', () => {
             mobileMenuBtn.classList.toggle('active');
-            mobileNav.classList.toggle('active');
+            nav.classList.toggle('active');
+            if (nav.classList.contains('active')) {
+                document.body.style.overflow = 'hidden';
+            } else {
+                document.body.style.overflow = '';
+            }
         });
 
-        // Close mobile menu when clicking on a link
-        document.querySelectorAll('.mobile-nav a').forEach(link => {
-            link.addEventListener('click', () => {
-                mobileMenuBtn.classList.remove('active');
-                mobileNav.classList.remove('active');
+        // TESTIMONIALS CAROUSEL
+        const testimonials = [
+            {
+                quote: 'Em 6 meses, nossa receita dobrou. A nova marca não só chamou atenção, como gerou uma conexão real com nossos clientes. O Growing 7 System realmente funciona.',
+                name: 'Marcos Ferreira',
+                role: 'CEO, TechSolutions'
+            },
+            {
+                quote: 'Não foi só uma mudança visual. Foi uma transformação completa de como nos vemos e como o mercado nos enxerga. Agora conseguimos cobrar o que realmente valemos.',
+                name: 'Ana Silva',
+                role: 'Fundadora, Wellness Hub'
+            },
+            {
+                quote: 'A metodologia Growing 7 trouxe clareza para algo que estava confuso há anos. Agora sabemos exatamente quem somos e como comunicar isso ao mundo.',
+                name: 'Roberto Costa',
+                role: 'Diretor, Construtora Costa'
+            }
+        ];
+
+        let currentTestimonial = 0;
+        const testimonialQuote = document.querySelector('.testimonial-quote');
+        const authorName = document.querySelector('.author-name');
+        const authorRole = document.querySelector('.author-role');
+        const dots = document.querySelectorAll('.testimonial-dot');
+
+        function updateTestimonial(index) {
+            const t = testimonials[index];
+            testimonialQuote.style.opacity = 0;
+            
+            setTimeout(() => {
+                testimonialQuote.textContent = t.quote;
+                authorName.textContent = t.name;
+                authorRole.textContent = t.role;
+                testimonialQuote.style.opacity = 1;
+            }, 300);
+
+            dots.forEach((dot, i) => {
+                dot.classList.toggle('active', i === index);
+            });
+        }
+
+        dots.forEach((dot, i) => {
+            dot.addEventListener('click', () => {
+                currentTestimonial = i;
+                updateTestimonial(i);
             });
         });
 
-        // Portfolio Projects Data
+        setInterval(() => {
+            currentTestimonial = (currentTestimonial + 1) % testimonials.length;
+            updateTestimonial(currentTestimonial);
+        }, 6000);
+
+        // COUNTER ANIMATION
+        const counters = document.querySelectorAll('.result-number, .stat-number');
+        const counterObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const el = entry.target;
+                    const text = el.textContent;
+                    const hasPlus = text.includes('+');
+                    const hasPercent = text.includes('%');
+                    const num = parseInt(text.replace(/[^0-9]/g, ''));
+                    
+                    let current = 0;
+                    const increment = num / 40;
+                    
+                    const timer = setInterval(() => {
+                        current += increment;
+                        if (current >= num) {
+                            current = num;
+                            clearInterval(timer);
+                        }
+                        el.textContent = (hasPlus ? '+' : '') + Math.floor(current) + (hasPercent ? '%' : '');
+                    }, 30);
+                    
+                    counterObserver.unobserve(el);
+                }
+            });
+        }, { threshold: 0.5 });
+
+        counters.forEach(counter => counterObserver.observe(counter));
+
+        // PARALLAX HERO CIRCLES
+        document.addEventListener('scroll', () => {
+            const scrolled = window.scrollY;
+            document.querySelectorAll('.hero-circle').forEach((circle, i) => {
+                const speed = 0.1 + (i * 0.05);
+                circle.style.transform = `translateY(${scrolled * speed}px)`;
+            });
+        });
+
+        // LIGHTBOX GALLERY
         const projects = {
-            oriol: [
-                'oriol-01.png',
-                'oriol-02.png',
-                'oriol-03.png',
-                'oriol-04.png',
-                'oriol-05.png',
-                'oriol-06.png',
-                'oriol-07.png',
-                'oriol-08.png',
-                'oriol-09.png',
-                'oriol-10.png',
-                'oriol-11.png',
-                'oriol-12.png',
-                'oriol-13.png',
-                'oriol-14.png',
-                'oriol-15.png'
-            ],
-            cristiane: [
-                'cristiane-01.png',
-                'cristiane-02.png',
-                'cristiane-03.png',
-                'cristiane-04.png',
-                'cristiane-05.png',
-                'cristiane-06.png',
-                'cristiane-07.png',
-                'cristiane-08.png',
-                'cristiane-09.png',
-                'cristiane-10.png',
-                'cristiane-11.png',
-                'cristiane-12.png',
-                'cristiane-13.png',
-                'cristiane-14.png',
-                'cristiane-15.png',
-                'cristiane-16.png'
-            ],
-            samela: [
-                'samela-01.png',
-                'samela-02.png',
-                'samela-03.png',
-                'samela-04.png',
-                'samela-05.png',
-                'samela-06.png',
-                'samela-07.png',
-                'samela-08.png',
-                'samela-09.png',
-                'samela-10.png',
-                'samela-11.png',
-                'samela-12.png',
-                'samela-13.png',
-                'samela-14.png',
-                'samela-15.png',
-                'samela-16.png',
-                'samela-17.png',
-                'samela-18.png'
-            ],
-            safetech: [
-                'safetech-01.png',
-                'safetech-02.png',
-                'safetech-03.png',
-                'safetech-04.png',
-                'safetech-05.png',
-                'safetech-06.png',
-                'safetech-07.png',
-                'safetech-08.png',
-                'safetech-09.png',
-                'safetech-10.png',
-                'safetech-11.png',
-                'safetech-12.png',
-                'safetech-13.png',
-                'safetech-14.png',
-                'safetech-15.png',
-                'safetech-16.png',
-                'safetech-17.png'
-            ]
+            oriol: {
+                title: 'Oriol Advocacia',
+                category: 'Identidade Visual',
+                images: [
+                    'oriol-01.png',
+                    'oriol-02.png',
+                    'oriol-03.png',
+                    'oriol-15.png',
+                    'oriol-04.png',
+                    'oriol-05.png',
+                    'oriol-10.png',
+                    'oriol-06.png',
+                    'oriol-07.png',
+                    'oriol-08.png',
+                    'oriol-09.png',
+                    'oriol-11.png',
+                    'oriol-12.png',
+                    'oriol-13.png',
+                    'oriol-14.png'
+                ]
+            },
+            cristiane: {
+                title: 'Instituto Cristiane Menezes',
+                category: 'Identidade Visual',
+                images: [
+                    'cristiane-01.png',
+                    'cristiane-02.png',
+                    'cristiane-03.png',
+                    'cristiane-04.png',
+                    'cristiane-05.png',
+                    'cristiane-06.png',
+                    'cristiane-07.png',
+                    'cristiane-08.png',
+                    'cristiane-09.png',
+                    'cristiane-10.png',
+                    'cristiane-11.png',
+                    'cristiane-12.png',
+                    'cristiane-13.png',
+                    'cristiane-14.png',
+                    'cristiane-15.png',
+                    'cristiane-16.png'
+                ]
+            },
+            samela: {
+                title: 'Sâmela Nails',
+                category: 'Identidade Visual',
+                images: [
+                    'samela-01.png',
+                    'samela-02.png',
+                    'samela-03.png',
+                    'samela-04.png',
+                    'samela-05.png',
+                    'samela-06.png',
+                    'samela-07.png',
+                    'samela-08.png',
+                    'samela-09.png',
+                    'samela-10.png',
+                    'samela-11.png',
+                    'samela-12.png',
+                    'samela-13.png',
+                    'samela-14.png',
+                    'samela-15.png',
+                    'samela-16.png',
+                    'samela-17.png',
+                    'samela-18.png'
+                ]
+            }
         };
 
-        // Lightbox functionality
-        const lightbox = document.getElementById('lightbox');
-        const lightboxImg = lightbox.querySelector('img');
-        const lightboxClose = lightbox.querySelector('.lightbox-close');
-        const lightboxPrev = lightbox.querySelector('.lightbox-prev');
-        const lightboxNext = lightbox.querySelector('.lightbox-next');
-        const lightboxCounter = lightbox.querySelector('.lightbox-counter');
-
-        let currentProject = '';
+        let currentProject = null;
         let currentImageIndex = 0;
 
-        // Open lightbox when clicking on portfolio item
-        document.querySelectorAll('.portfolio-item').forEach(item => {
-            item.addEventListener('click', () => {
-                currentProject = item.dataset.project;
-                currentImageIndex = 0;
-                openLightbox();
-            });
-        });
-
-        function openLightbox() {
-            lightbox.classList.add('active');
-            document.body.style.overflow = 'hidden';
+        function openLightbox(projectId) {
+            currentProject = projects[projectId];
+            currentImageIndex = 0;
             updateLightboxImage();
+            document.getElementById('lightbox').classList.add('active');
+            document.body.style.overflow = 'hidden';
         }
 
         function closeLightbox() {
-            lightbox.classList.remove('active');
+            document.getElementById('lightbox').classList.remove('active');
             document.body.style.overflow = '';
         }
 
         function updateLightboxImage() {
-            const images = projects[currentProject];
-            lightboxImg.src = images[currentImageIndex];
-            lightboxCounter.textContent = `${currentImageIndex + 1} / ${images.length}`;
-        }
-
-        function nextImage() {
-            const images = projects[currentProject];
-            currentImageIndex = (currentImageIndex + 1) % images.length;
-            updateLightboxImage();
+            const img = document.getElementById('lightbox-image');
+            const counter = document.getElementById('lightbox-counter');
+            const title = document.getElementById('lightbox-title-text');
+            const category = document.getElementById('lightbox-category-text');
+            
+            img.src = currentProject.images[currentImageIndex];
+            counter.textContent = `${currentImageIndex + 1} / ${currentProject.images.length}`;
+            title.textContent = currentProject.title;
+            category.textContent = currentProject.category;
         }
 
         function prevImage() {
-            const images = projects[currentProject];
-            currentImageIndex = (currentImageIndex - 1 + images.length) % images.length;
+            currentImageIndex = (currentImageIndex - 1 + currentProject.images.length) % currentProject.images.length;
             updateLightboxImage();
         }
 
-        // Event listeners
-        lightboxClose.addEventListener('click', closeLightbox);
-        lightboxNext.addEventListener('click', nextImage);
-        lightboxPrev.addEventListener('click', prevImage);
-
-        // Close lightbox when clicking outside the image
-        lightbox.addEventListener('click', (e) => {
-            if (e.target === lightbox) {
-                closeLightbox();
-            }
-        });
+        function nextImage() {
+            currentImageIndex = (currentImageIndex + 1) % currentProject.images.length;
+            updateLightboxImage();
+        }
 
         // Keyboard navigation
         document.addEventListener('keydown', (e) => {
-            if (!lightbox.classList.contains('active')) return;
+            if (!document.getElementById('lightbox').classList.contains('active')) return;
             
             if (e.key === 'Escape') closeLightbox();
-            if (e.key === 'ArrowRight') nextImage();
             if (e.key === 'ArrowLeft') prevImage();
+            if (e.key === 'ArrowRight') nextImage();
         });
 
-        // Smooth scroll for navigation links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-            });
+        // Click outside to close
+        document.getElementById('lightbox').addEventListener('click', (e) => {
+            if (e.target.id === 'lightbox') closeLightbox();
         });
+
+        console.log('🔥 Growing Design — Design que pensa.');
     </script>
 </body>
 </html>
