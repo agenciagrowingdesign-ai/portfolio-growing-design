@@ -1,17 +1,298 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Growing Design - Portfolio</title>
-    <link rel="stylesheet" href="styles.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: white;
+            padding: 20px 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo img {
+            height: 40px;
+        }
+
+        nav a {
+            margin-left: 30px;
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: #007bff;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            flex-direction: column;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 5px;
+        }
+
+        .mobile-menu-btn span {
+            width: 25px;
+            height: 3px;
+            background: #333;
+            margin: 3px 0;
+            transition: 0.3s;
+        }
+
+        .mobile-nav {
+            display: none;
+            position: fixed;
+            top: 80px;
+            left: 0;
+            right: 0;
+            background: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 20px;
+            z-index: 99;
+        }
+
+        .mobile-nav.active {
+            display: block;
+        }
+
+        .mobile-nav a {
+            display: block;
+            padding: 15px 0;
+            text-decoration: none;
+            color: #333;
+            border-bottom: 1px solid #eee;
+        }
+
+        /* Hero */
+        .hero {
+            text-align: center;
+            padding: 100px 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            opacity: 0.9;
+        }
+
+        /* Portfolio */
+        .portfolio {
+            padding: 80px 20px;
+        }
+
+        .portfolio h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 60px;
+        }
+
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .portfolio-item {
+            cursor: pointer;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .portfolio-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .portfolio-image {
+            height: 250px;
+            overflow: hidden;
+        }
+
+        .portfolio-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s;
+        }
+
+        .portfolio-item:hover .portfolio-image img {
+            transform: scale(1.1);
+        }
+
+        .portfolio-info {
+            padding: 20px;
+            background: white;
+        }
+
+        .portfolio-info h3 {
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .portfolio-info p {
+            color: #666;
+        }
+
+        /* Lightbox */
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.95);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .lightbox.active {
+            display: flex;
+        }
+
+        .lightbox-content {
+            max-width: 90%;
+            max-height: 90%;
+            position: relative;
+        }
+
+        .lightbox-content img {
+            max-width: 100%;
+            max-height: 90vh;
+            object-fit: contain;
+        }
+
+        .lightbox-close, .lightbox-prev, .lightbox-next {
+            position: fixed;
+            background: rgba(255,255,255,0.1);
+            border: none;
+            color: white;
+            font-size: 30px;
+            cursor: pointer;
+            padding: 15px 20px;
+            transition: background 0.3s;
+        }
+
+        .lightbox-close:hover, .lightbox-prev:hover, .lightbox-next:hover {
+            background: rgba(255,255,255,0.2);
+        }
+
+        .lightbox-close {
+            top: 20px;
+            right: 20px;
+        }
+
+        .lightbox-prev {
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .lightbox-next {
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .lightbox-counter {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: white;
+            font-size: 18px;
+            background: rgba(0,0,0,0.5);
+            padding: 10px 20px;
+            border-radius: 20px;
+        }
+
+        /* Footer */
+        footer {
+            background: #333;
+            color: white;
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        footer a {
+            color: white;
+            text-decoration: none;
+            margin: 0 15px;
+        }
+
+        /* Mobile */
+        @media (max-width: 768px) {
+            .desktop-nav {
+                display: none;
+            }
+
+            .mobile-menu-btn {
+                display: flex;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .portfolio-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
 <body>
     <!-- Header -->
     <header>
         <div class="container">
             <div class="logo">
-                <img src="images/logo-growing.svg" alt="Growing Design">
+                <h2>Growing Design</h2>
             </div>
             <nav class="desktop-nav">
                 <a href="#portfolio">Portfolio</a>
@@ -83,7 +364,7 @@
                 <!-- SafeTech Training Institute -->
                 <div class="portfolio-item" data-project="safetech">
                     <div class="portfolio-image">
-                        <img src="images/safetech/safetech-01-cover.png" alt="SafeTech Training Institute">
+                        <img src="safetech-01.png" alt="SafeTech Training Institute">
                     </div>
                     <div class="portfolio-info">
                         <h3>SafeTech Training Institute</h3>
@@ -116,6 +397,185 @@
         </div>
     </footer>
 
-    <script src="script.js"></script>
+    <script>
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const mobileNav = document.querySelector('.mobile-nav');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenuBtn.classList.toggle('active');
+            mobileNav.classList.toggle('active');
+        });
+
+        // Close mobile menu when clicking on a link
+        document.querySelectorAll('.mobile-nav a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenuBtn.classList.remove('active');
+                mobileNav.classList.remove('active');
+            });
+        });
+
+        // Portfolio Projects Data
+        const projects = {
+            oriol: [
+                'oriol-01.png',
+                'oriol-02.png',
+                'oriol-03.png',
+                'oriol-04.png',
+                'oriol-05.png',
+                'oriol-06.png',
+                'oriol-07.png',
+                'oriol-08.png',
+                'oriol-09.png',
+                'oriol-10.png',
+                'oriol-11.png',
+                'oriol-12.png',
+                'oriol-13.png',
+                'oriol-14.png',
+                'oriol-15.png'
+            ],
+            cristiane: [
+                'cristiane-01.png',
+                'cristiane-02.png',
+                'cristiane-03.png',
+                'cristiane-04.png',
+                'cristiane-05.png',
+                'cristiane-06.png',
+                'cristiane-07.png',
+                'cristiane-08.png',
+                'cristiane-09.png',
+                'cristiane-10.png',
+                'cristiane-11.png',
+                'cristiane-12.png',
+                'cristiane-13.png',
+                'cristiane-14.png',
+                'cristiane-15.png',
+                'cristiane-16.png'
+            ],
+            samela: [
+                'samela-01.png',
+                'samela-02.png',
+                'samela-03.png',
+                'samela-04.png',
+                'samela-05.png',
+                'samela-06.png',
+                'samela-07.png',
+                'samela-08.png',
+                'samela-09.png',
+                'samela-10.png',
+                'samela-11.png',
+                'samela-12.png',
+                'samela-13.png',
+                'samela-14.png',
+                'samela-15.png',
+                'samela-16.png',
+                'samela-17.png',
+                'samela-18.png'
+            ],
+            safetech: [
+                'safetech-01.png',
+                'safetech-02.png',
+                'safetech-03.png',
+                'safetech-04.png',
+                'safetech-05.png',
+                'safetech-06.png',
+                'safetech-07.png',
+                'safetech-08.png',
+                'safetech-09.png',
+                'safetech-10.png',
+                'safetech-11.png',
+                'safetech-12.png',
+                'safetech-13.png',
+                'safetech-14.png',
+                'safetech-15.png',
+                'safetech-16.png',
+                'safetech-17.png'
+            ]
+        };
+
+        // Lightbox functionality
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = lightbox.querySelector('img');
+        const lightboxClose = lightbox.querySelector('.lightbox-close');
+        const lightboxPrev = lightbox.querySelector('.lightbox-prev');
+        const lightboxNext = lightbox.querySelector('.lightbox-next');
+        const lightboxCounter = lightbox.querySelector('.lightbox-counter');
+
+        let currentProject = '';
+        let currentImageIndex = 0;
+
+        // Open lightbox when clicking on portfolio item
+        document.querySelectorAll('.portfolio-item').forEach(item => {
+            item.addEventListener('click', () => {
+                currentProject = item.dataset.project;
+                currentImageIndex = 0;
+                openLightbox();
+            });
+        });
+
+        function openLightbox() {
+            lightbox.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            updateLightboxImage();
+        }
+
+        function closeLightbox() {
+            lightbox.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        function updateLightboxImage() {
+            const images = projects[currentProject];
+            lightboxImg.src = images[currentImageIndex];
+            lightboxCounter.textContent = `${currentImageIndex + 1} / ${images.length}`;
+        }
+
+        function nextImage() {
+            const images = projects[currentProject];
+            currentImageIndex = (currentImageIndex + 1) % images.length;
+            updateLightboxImage();
+        }
+
+        function prevImage() {
+            const images = projects[currentProject];
+            currentImageIndex = (currentImageIndex - 1 + images.length) % images.length;
+            updateLightboxImage();
+        }
+
+        // Event listeners
+        lightboxClose.addEventListener('click', closeLightbox);
+        lightboxNext.addEventListener('click', nextImage);
+        lightboxPrev.addEventListener('click', prevImage);
+
+        // Close lightbox when clicking outside the image
+        lightbox.addEventListener('click', (e) => {
+            if (e.target === lightbox) {
+                closeLightbox();
+            }
+        });
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (!lightbox.classList.contains('active')) return;
+            
+            if (e.key === 'Escape') closeLightbox();
+            if (e.key === 'ArrowRight') nextImage();
+            if (e.key === 'ArrowLeft') prevImage();
+        });
+
+        // Smooth scroll for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
 </body>
 </html>
